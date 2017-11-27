@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="employee_table2")
+@Table(name="employee_servicetable")
 public class Employee {
 
 	@Id

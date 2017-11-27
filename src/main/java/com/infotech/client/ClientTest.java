@@ -5,69 +5,38 @@ import java.util.Date;
 import org.hibernate.Session;
 
 import com.infotech.entites.Employee;
+import com.infotech.servic.impl.EmployeeServiceImpl;
+import com.infotech.service.EmployeeService;
 import com.infotech.util.HibernateUtil;
 
 public class ClientTest {
 
 	public static void main(String[] args) {
-
+		EmployeeService empService = new EmployeeServiceImpl();
 		
+//		CreateEmployee(empService);
+//		getEmployeebyId(empService);
+//		updateEmployeebyId(empService);	
+		deleteEmployeebyId(empService);
 		
-		try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-			
-			//	CreateEmployee(session);;
-			//	getEmployeebyId(session);
-			//	updateEmployeebyId(session);	
-			deleteEmployeebyId(session);
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
-	private static void deleteEmployeebyId(Session session) {
-
-		Employee employee = session.get(Employee.class, 2);
-		if(employee != null) {
-			session.beginTransaction();
-			session.delete(employee);
-			session.getTransaction().commit();
-			
-		}else {
-			System.out.println("Employee dosen't exist with provided id,,,.");
-		}
+	private static void deleteEmployeebyId(EmployeeService empService) {
+        empService.deleteEmployeebyId(1);
 	}
 
-	private static void updateEmployeebyId(Session session) {
-		Employee employee = session.get(Employee.class, 2);
-		if(employee != null) {
-			
-			employee.setSalary(65000.00);
-			
-			session.beginTransaction();
-			session.update(employee);
-			session.getTransaction().commit();
-			
-		}else {
-			System.out.println("Employee dosen't exist with provided id,,,.");
-		}
-		
+	private static void updateEmployeebyId(EmployeeService empService) {
+		 empService.updateEmployeebyId(1,65000.00);
+
 	}
 
-	private static void getEmployeebyId(Session session) {
-		Employee employee = session.load(Employee.class, 21);
-		if(employee != null) {
-			System.out.println(employee);
-		}else {
-			System.out.println("Employee dosen't exist with provided id,,,.");
-		}
+	private static void getEmployeebyId(EmployeeService empService) {
+		Employee employee = empService.getEmployeebyId(1);
+		System.out.println(employee);
 	}
 	
-	private static void CreateEmployee(Session session) {
-		session.beginTransaction();
-		Integer id = (Integer) session.save(getEmployee());
-		System.out.println("Employee  is created with id::"+id);
-		session.getTransaction().commit();
+	private static void CreateEmployee(EmployeeService empService) {
+		empService.CreateEmployee(getEmployee());	
 	}
 	
 	
